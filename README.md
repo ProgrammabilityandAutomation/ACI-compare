@@ -12,9 +12,9 @@ Contacts:
 **Container Installation**
 
 
-docker run -p 9001:8080 sfloresk/aci-compare
+docker run -p 8080:8080 sfloresk/aci-compare
 
-go to http://0.0.0.0:9001
+go to http://0.0.0.0:8080
 
 **Source Installation**
 
