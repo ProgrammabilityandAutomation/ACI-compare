@@ -1,0 +1,152 @@
+<div class="container">
+    <div class="section">
+        <div class="secondary-tabs">
+            <div class="tab-content">
+                <div id="tab-intro-content" class="tab-pane active">
+                    <div class="panel panel--loose panel--bordered">
+                        <div class="row">
+                            <div class="col-md-8 text-large">
+                                <h1 class="text-huge text-blue base-margin-bottom">Save snapshot</h1>
+                                <p>Save two or more configuration snapshots to be able to compare them
+                                </p>
+                                <ul class="list list--inline list--loose">
+                                    <li>
+                                        <button class="btn btn--primary" ng-click="getPods();getFiles();">Refresh
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button class="btn btn--success" ng-if="selected_switch.fabricNode"
+                                                ng-click="takeSnapshot(selected_switch);">Take Snapshot
+                                        </button>
+                                    </li>
+                                </ul>
+
+                                <div class="col-md-6">
+                                    <br/>
+                                    <div class="form-group__text">
+                                        <input id="url" type="text"
+                                               ng-model="snapshot.name">
+                                        <label for="url">File Name</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group__text select">
+                                            <select id="sel_pod" name="sel_pod"
+                                                    ng-options="pod as pod.fabricPod.attributes.dn for pod in pods track by pod.fabricPod.attributes.dn"
+                                                    ng-model="selected_pod"
+                                                    ng-change="getSwitches(selected_pod)">
+                                            </select>
+                                            <label for="sel_pod">Pod</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group__text select">
+                                            <select id="sel_switch"
+                                                    ng-options="switch as switch.fabricNode.attributes.dn for switch in switches track by switch.fabricNode.attributes.dn"
+                                                    ng-model="selected_switch">
+                                            </select>
+                                            <label for="sel_switch">Switch</label>
+                                        </div>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button class="btn btn--primary-ghost sn-type selected"
+                                                onclick="$('.sn-type').removeClass('selected');$(this).addClass('selected')"
+                                                ng-click="setSnapshotType('interfaces')">
+                                            Interfaces
+                                        </button>
+                                        <button class="btn btn--primary-ghost sn-type"
+                                                onclick="$('.sn-type').removeClass('selected');$(this).addClass('selected')"
+                                                ng-click="setSnapshotType('isis-routes')">
+                                            ISIS Routes
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="panel panel--bordered animated fadeInRight dbl-margin-bottom">
+                                    <img src="/static/web_app/public/img/n9k.png">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="secondary-tabs">
+            <div class="tab-content">
+                <div id="tab-snapshot" class="tab-pane active">
+                    <div class="panel panel--loose panel--bordered">
+                        <div class="row">
+                            <div class="col-md-12 text-large">
+                                <h1 class="text-huge text-blue base-margin-bottom">Snapshots</h1>
+                                <p>Here is the list of configurations saved
+                                </p>
+
+                                <div class="responsive-table">
+                                    <table class="table table--bordered table--hover">
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                <label class="checkbox">
+
+                                                </label>
+                                            </th>
+                                            <th>File name (leaf-date)</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="file in files">
+                                            <td>
+                                                <label class="checkbox">
+                                                    <input type="checkbox" ng-model="file.selected"/>
+                                                    <span class="checkbox__input"></span>
+                                                </label>
+                                            </td>
+                                            <td>{a file.name a}</td>
+                                            <td>
+                                                <a target="_blank" href="download/{a apic.url.replace('https://','').replace('/','') a}/{a file.name a}"><span
+                                                        class="icon-download icon-medium"></span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <hr/>
+                                <ul class="list list--inline list--loose">
+                                    <li>
+                                        <button class="btn btn--success"
+                                                ng-click="getDiff();">Compare
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="secondary-tabs">
+            <div class="tab-content">
+                <div id="tab-diff" class="tab-pane active">
+                    <div class="panel panel--loose panel--bordered">
+                        <div class="row">
+                            <div id="diff" class="col-md-12 text-large">
+                                <pre style="min-height:150px"><code id="xml_response" class="xml hljs">
+                                    {a diff a}
+
+                                </code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
